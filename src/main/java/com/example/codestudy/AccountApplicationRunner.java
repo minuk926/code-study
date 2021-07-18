@@ -9,11 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-//@Order(2)
-@Component
+//@Component
 @Transactional
 //@Slf4j
-public class StudyApplicationRunner implements ApplicationRunner {
+public class AccountApplicationRunner implements ApplicationRunner {
 
     @PersistenceContext
     EntityManager entityManager;
