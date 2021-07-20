@@ -7,9 +7,10 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+//@Entity
 @Setter
 @Getter
+//@Table(name = "cmm_user")
 public class Account {
 
     @Id @GeneratedValue
