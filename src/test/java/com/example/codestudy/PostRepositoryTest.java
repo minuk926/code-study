@@ -19,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
-@ExtendWith(SpringExtension.class)
+//@ExtendWith(SpringExtension.class)
 @DataJpaTest
-@TestPropertySource("classpath:application-test.properties")
+//@TestPropertySource("classpath:application-test.properties")
 public class PostRepositoryTest {
 
     @Autowired
