@@ -1,7 +1,6 @@
 package com.example.codestudy.repository;
 
 import com.example.codestudy.domain.Comment;
-import com.example.codestudy.repository.CommentRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 2021-07-22
  */
 @DataJpaTest
-//@ActiveProfiles("test")
+@TestPropertySource("classpath:application-test.properties")
+@ActiveProfiles("test")
 class CommentRepositoryTest {
 
     @Autowired
@@ -32,6 +35,19 @@ class CommentRepositoryTest {
 
     @AfterEach
     void tearDown() {
+    }
+
+    @Test
+    void repo_load(){
+        Comment comment = new Comment();
+        comment.setComment("Hello Comment");
+        comment.setTitle("Best comment");
+        comment.setLikeCount(200);
+        commentRepository.save(comment);
+        
+        commentRepository.findByCommentContainsIgnoreCase("hello");
+        commentRepository.findByCommentContainsIgnoreCaseAndLikeCountGreaterThan("hello", 100);
+        Stream<Comment> byTitleOrCommentContainsIgnoreCase = commentRepository.findByTitleContainsIgnoreCaseOrCommentContainsIgnoreCase("hello", "best");
     }
 
     @Test

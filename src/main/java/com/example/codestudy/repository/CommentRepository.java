@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Lim, Jong Uk (minuk926)
@@ -20,5 +21,9 @@ public interface CommentRepository extends MyRepository<Comment, Long>{
 
     List<Comment> getByCommentLikeOrderByTitle(String comment, Pageable pageable);
 
-    List<Comment> findByCommentContains(String keyword);
+    List<Comment> findByCommentContainsIgnoreCase(String keyword);
+    List<Comment> findByCommentContainsIgnoreCaseAndLikeCountGreaterThan(String keyword, int likeCount);
+
+    Stream<Comment> findByTitleContainsIgnoreCaseOrCommentContainsIgnoreCase(String title, String comment);
+
 }
