@@ -1,9 +1,9 @@
-package com.example.codestudy;
+package com.example.codestudy.runner;
 
+import com.example.codestudy.domain.Post;
 import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

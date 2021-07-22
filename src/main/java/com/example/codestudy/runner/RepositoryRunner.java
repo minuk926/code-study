@@ -1,5 +1,7 @@
-package com.example.codestudy;
+package com.example.codestudy.runner;
 
+import com.example.codestudy.domain.Post;
+import com.example.codestudy.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

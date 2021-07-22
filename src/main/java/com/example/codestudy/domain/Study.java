@@ -1,4 +1,4 @@
-package com.example.codestudy;
+package com.example.codestudy.domain;
 
 import lombok.Getter;
 import lombok.Setter;
