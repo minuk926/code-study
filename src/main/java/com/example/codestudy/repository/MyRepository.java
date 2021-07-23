@@ -28,4 +28,6 @@ public interface MyRepository<T, ID extends Serializable> extends Repository<T, 
 
     <E extends T> Optional<E> findById(ID id);
 
+    void flush();
+
 }

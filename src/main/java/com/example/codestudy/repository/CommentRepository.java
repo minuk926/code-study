@@ -3,8 +3,11 @@ package com.example.codestudy.repository;
 import com.example.codestudy.domain.Comment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 /**
@@ -24,6 +27,8 @@ public interface CommentRepository extends MyRepository<Comment, Long>{
     List<Comment> findByCommentContainsIgnoreCase(String keyword);
     List<Comment> findByCommentContainsIgnoreCaseAndLikeCountGreaterThan(String keyword, int likeCount);
 
-    Stream<Comment> findByTitleContainsIgnoreCaseOrCommentContainsIgnoreCase(String title, String comment);
+    Stream<Comment> getByCommentContainsIgnoreCase(String comment);
 
+    @Async
+    ListenableFuture<List<Comment>> queryByCommentContainsIgnoreCase(String comment);
 }
