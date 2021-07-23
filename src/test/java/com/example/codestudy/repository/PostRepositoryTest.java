@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -60,5 +61,12 @@ public class PostRepositoryTest {
         assertThat(page.getTotalElements()).isEqualTo(1);
         assertThat(page.getNumber()).isEqualTo(0);
         assertThat(page.getSize()).isEqualTo(10);
+    }
+
+    @Test
+    //@Rollback(value = false)
+    public void customRepository(){
+        Assert.notNull(null, "dddd");
+        postRepository.findMyPost();
     }
 }
