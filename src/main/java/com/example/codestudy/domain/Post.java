@@ -1,7 +1,9 @@
 package com.example.codestudy.domain;
 
+import com.example.codestudy.event.PostPublishedEvent;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ import java.util.Set;
 @Setter
 //@Builder
 //@ToString
-public class Post {
+public class Post extends AbstractAggregateRoot<Post> {
 
     @Id
     @GeneratedValue
@@ -41,5 +43,10 @@ public class Post {
                 ", title='" + title + '\'' +
                 //", comments=" + comments +
                 '}';
+    }
+
+    public Post publish(){
+        this.registerEvent(new PostPublishedEvent(this));
+        return this;
     }
 }

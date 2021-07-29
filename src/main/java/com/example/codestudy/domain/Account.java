@@ -20,6 +20,10 @@ public class Account {
 
     private String password;
 
+    private String firstName;
+
+    private String lastName;
+
     @OneToMany(mappedBy = "account") //cascade = CascadeType.PERSIST)
     private Set<Study> studies = new HashSet<>();
 
