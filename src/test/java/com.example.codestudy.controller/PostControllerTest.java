@@ -39,7 +39,7 @@ class PostControllerTest {
         postRepository.save(post);
 
 
-        this.mockMvc = standaloneSetup(new PostController(postRepository))
+        this.mockMvc = standaloneSetup(new PostController())
                 .defaultRequest(get("/").accept(MediaType.APPLICATION_JSON))
                 .alwaysExpect(status().isOk())
                 .alwaysExpect(content().contentType("application/json"))

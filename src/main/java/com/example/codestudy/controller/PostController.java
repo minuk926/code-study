@@ -1,10 +1,6 @@
 package com.example.codestudy.controller;
 
 import com.example.codestudy.domain.Post;
-<<<<<<< HEAD
-import com.example.codestudy.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
-=======
 import com.example.codestudy.hateoas.CustomPagedResourceAssembler;
 import com.example.codestudy.hateoas.PagedModelUtil;
 import com.example.codestudy.repository.PostRepository;
@@ -16,26 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
->>>>>>> b_web
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-@SuppressWarnings("ALL")
-@RestController
-public class PostController {
-    private final PostRepository postRepository;
-
-    public PostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
-
-    @GetMapping("/posts/{id}")
-    public Post getPost(@PathVariable("id") Post post){
-        return postRepository.findById(post.getId()).get();
-    }
-=======
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -72,5 +52,4 @@ public class PostController {
         //return assembler.toModel(postRepository.findAll(pageable));
     }
 
->>>>>>> b_web
 }
