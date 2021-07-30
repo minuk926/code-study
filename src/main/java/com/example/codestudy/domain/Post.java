@@ -1,11 +1,13 @@
 package com.example.codestudy.domain;
 
 import com.example.codestudy.event.PostPublishedEvent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +24,10 @@ public class Post extends AbstractAggregateRoot<Post> {
 
     private String title;
 
-    //@Transient
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)  // CascadeType.ALL
     private Set<Comment> comments = new HashSet<>();
 
