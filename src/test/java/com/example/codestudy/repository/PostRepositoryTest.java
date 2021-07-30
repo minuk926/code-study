@@ -69,4 +69,20 @@ public class PostRepositoryTest {
         Assert.notNull(null, "dddd");
         postRepository.findMyPost();
     }
+
+    @Test
+    void saveTest(){
+        Post post = new Post();
+        post.setId(1l);
+        post.setTitle("jpa");
+        postRepository.save(post);
+
+        post = new Post();
+        post.setTitle("jpa2");
+        post.setId(1l);
+        postRepository.save(post);
+
+        List<Post> all = postRepository.findAll();
+        assertThat(all.size()).isEqualTo(1);
+    }
 }
