@@ -1,7 +1,6 @@
 package com.example.codestudy.domain;
 
 import com.example.codestudy.event.PostPublishedEvent;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -23,7 +22,7 @@ public class Post extends AbstractAggregateRoot<Post> {
 
     private String title;
 
-    @JsonIgnore
+    //@Transient
     @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)  // CascadeType.ALL
     private Set<Comment> comments = new HashSet<>();
 
