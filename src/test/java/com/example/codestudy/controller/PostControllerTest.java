@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 /**
  * @author Lim, Jong Uk (minuk926)
@@ -41,6 +43,12 @@ class PostControllerTest {
             postRepository.save(post);
             cnt++;
         }
+
+        this.mockMvc = standaloneSetup(new PostController())
+                .defaultRequest(get("/").accept(MediaType.APPLICATION_JSON))
+                .alwaysExpect(status().isOk())
+                .alwaysExpect(content().contentType("application/json"))
+                .build();
     }
 
     @AfterEach
@@ -53,6 +61,7 @@ class PostControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value(equalTo("test1")))
+                .andExpect(jsonPath("$.title", containsString("test")))
                 .andExpect(content().string(containsString("test1")))
                 ;
     }
