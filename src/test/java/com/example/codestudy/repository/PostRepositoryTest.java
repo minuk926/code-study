@@ -2,7 +2,6 @@ package com.example.codestudy.repository;
 
 //import org.junit.Test;
 import com.example.codestudy.domain.Post;
-import com.example.codestudy.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,22 +9,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@TestPropertySource("classpath:application-test.properties")
+//@TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles("test")
 public class PostRepositoryTest {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @BeforeEach
     void setUp() {
@@ -33,7 +38,6 @@ public class PostRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        postRepository.deleteAll();
     }
 
     @Test
@@ -71,18 +75,44 @@ public class PostRepositoryTest {
     }
 
     @Test
+    //@Rollback(value = false)
+    //@Transactional
     void saveTest(){
         Post post = new Post();
-        post.setId(1l);
         post.setTitle("jpa");
-        postRepository.save(post);
+        Post savedPost = postRepository.save(post);  // persist
+        assertThat(entityManager.contains(post)).isTrue();
+        assertThat(entityManager.contains(savedPost)).isTrue();
+        //noinspection ResultOfMethodCallIgnored
+        assertThat(post == savedPost);
 
-        post = new Post();
-        post.setTitle("jpa2");
-        post.setId(1l);
-        postRepository.save(post);
+        Post postUpdate = new Post();
+        postUpdate.setId(post.getId());
+        postUpdate.setTitle("jpa2");
+        Post updatedPost = postRepository.save(postUpdate);  // merge
+        assertThat(entityManager.contains(postUpdate)).isFalse();
+        assertThat(entityManager.contains(updatedPost)).isTrue();
+        assertThat(updatedPost != postUpdate);
 
         List<Post> all = postRepository.findAll();
         assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    void query(){
+        Post post = new Post();
+        post.setTitle("jpa");
+        Post savedPost = postRepository.save(post);
+
+        postRepository.findByTitle("jpa", Sort.by("title"));
+        //postRepository.findByTitle("jpa", Sort.by("LENGTH(title)"));
+        postRepository.findByTitle("jpa", JpaSort.unsafe("LENGTH(title)"));
+        postRepository.findByTitle2(1l,"jpa");
+
+        int update = postRepository.updateTitle(1l, "jpa update");
+        assertThat(update).isEqualTo(1);
+
+        Optional<Post> optionalPost = postRepository.findById(1l);
+        assertThat(optionalPost.get().getTitle()).isEqualTo("jpa update"); // 실패 조회query가 실행되디 않는다 --> 트랜잭션이 끋나지 않아 flush 안됨
     }
 }

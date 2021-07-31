@@ -3,11 +3,12 @@ package com.example.codestudy.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@NamedEntityGraph(
+        name = "Comment.post",
+        attributeNodes = @NamedAttributeNode("post")
+)
 @Entity
 @Getter
 @Setter
@@ -23,7 +24,13 @@ public class Comment {
 
     private Integer likeCount;
 
-    @ManyToOne
+    private int up;
+
+    private int down;
+
+    private boolean best;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
     @Override

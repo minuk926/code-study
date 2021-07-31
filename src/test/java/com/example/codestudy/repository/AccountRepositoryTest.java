@@ -1,6 +1,7 @@
 package com.example.codestudy.repository;
 
 import com.example.codestudy.domain.Account;
+import com.example.codestudy.domain.QAccount;
 import com.querydsl.core.types.Predicate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,12 +38,12 @@ class AccountRepositoryTest {
 
     @Test
     void crud(){
-//        QAccount qAccount = QAccount.account;
-//        Predicate predicate = qAccount
-//                .firstName.containsIgnoreCase("jonguk")
-//                .and(qAccount.lastName.startsWith("lim"));
-//
-//        Optional<Account> one = accountRepository.findOne(predicate);
-//        assertThat(one).isEmpty();
+        QAccount qAccount = QAccount.account;
+        Predicate predicate = qAccount
+                .firstName.containsIgnoreCase("jonguk")
+                .and(qAccount.lastName.startsWith("lim"));
+
+        Optional<Account> one = accountRepository.findOne(predicate);
+        assertThat(one).isEmpty();
     }
 }
